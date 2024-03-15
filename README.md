@@ -1,1 +1,1 @@
-# GroupProject
+![groupInfo.png](groupInfo.png)
