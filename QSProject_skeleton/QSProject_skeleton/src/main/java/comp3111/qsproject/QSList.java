@@ -46,10 +46,5 @@ public class QSList {
         catch (IOException e) {
             e.printStackTrace();
         }
-        /*
-            Your Code Here.
-            1. Load the csv into list.
-            2. Collect the set of university, type, region and country.
-         */
     }
 }

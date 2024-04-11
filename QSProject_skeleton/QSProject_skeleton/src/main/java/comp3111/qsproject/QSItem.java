@@ -65,7 +65,6 @@ public class QSItem {
 
     String getProperty(String property) {
         String propertyValue = new String();
-
         try {
             Field field = getClass().getDeclaredField(property);
             field.setAccessible(true);
@@ -77,10 +76,6 @@ public class QSItem {
         catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        /*
-            return the property value.
-            use JAVA reflection.
-         */
         return propertyValue;
     }
 }

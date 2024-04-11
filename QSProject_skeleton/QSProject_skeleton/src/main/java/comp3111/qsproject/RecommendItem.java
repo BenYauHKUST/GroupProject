@@ -29,12 +29,6 @@ public class RecommendItem {
             recentYear = item.year;
             recentRank = item.getRank();
         }
-        /*
-            Your Code Here.
-            This function update the information from other QSItem.
-            1. Update the best rank and the corresponding year.
-            2. Update the most recent year and the corresponding rank.
-         */
     }
 
     public String getName() { return name; }
