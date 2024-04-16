@@ -1,0 +1,1 @@
+![groupInfo.png](Images/groupInfo.png)
