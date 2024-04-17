@@ -16,6 +16,12 @@ public class T1Analysis {
             Use static properties in QSList here.
             Hint: QSList.list is a static property.
          */
+
+        for(QSItem item : QSList.list){
+            if(item.year.equals(year)){
+                tableList.add(item);
+            }
+        }
     }
 
     ObservableList<QSItem> getTableList() {
@@ -36,6 +42,10 @@ public class T1Analysis {
                 key: "S", value: the Sum score of the Small size universities,
             ]
          */
+
+        /*for (QSItem item : QSList.list){
+            if ()
+        }*/
         return pieChartData;
     }
 
