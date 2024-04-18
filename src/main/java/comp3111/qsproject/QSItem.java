@@ -65,10 +65,17 @@ public class QSItem {
 
     String getProperty(String property) {
         String propertyValue = new String();
-        /*
-            return the property value.
-            use JAVA reflection.
-         */
+        try {
+            Field field = getClass().getDeclaredField(property);
+            field.setAccessible(true);
+            Object value = field.get(this);
+            if (value != null) {
+                propertyValue = value.toString();
+            }
+        }
+        catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return propertyValue;
     }
 }

@@ -21,12 +21,14 @@ public class RecommendItem {
 
     void update(QSItem item) {
         assert (item.name.equals(name));
-        /*
-            Your Code Here.
-            This function update the information from other QSItem.
-            1. Update the best rank and the corresponding year.
-            2. Update the most recent year and the corresponding rank.
-         */
+        if (Integer.parseInt(item.getRank()) < Integer.parseInt(bestRank)) {
+            bestYear = item.year;
+            bestRank = item.getRank();
+        }
+        if (Integer.parseInt(item.year) > Integer.parseInt(recentYear)) {
+            recentYear = item.year;
+            recentRank = item.getRank();
+        }
     }
 
     public String getName() { return name; }
