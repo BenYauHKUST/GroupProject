@@ -23,7 +23,7 @@ public class QSList {
 
     public static void initialize() {
         try {
-            String csvFilePath = "C:/Users/85298/OneDrive - HKUST Connect/Desktop/Courses/COMP 3111/Project/qs.csv";
+            String csvFilePath = "../GroupProject/data/qsData.csv";
             CsvReader reader = new CsvReader(csvFilePath,  ',', Charset.forName("UTF-8"));
             reader.readHeaders();
             Set<String> universitySet = new HashSet<>();
