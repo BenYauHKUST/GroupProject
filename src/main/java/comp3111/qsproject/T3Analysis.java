@@ -10,19 +10,22 @@ import java.util.Map;
 
 public class T3Analysis {
     public ObservableList<RecommendItem> RecommendList = FXCollections.observableArrayList();
-
     T3Analysis (String top_input, String bottom_input, String type, String region) {
         int bottom_num = Integer.parseInt(bottom_input);
         int top_num = Integer.parseInt(top_input);
         HashMap<String, RecommendItem> temp = new HashMap<>();
-        for (QSItem item : QSList.list) {
-            if (Integer.parseInt(item.getRank()) >= bottom_num && Integer.parseInt(item.getRank()) <= top_num
-                    && item.getType().equals(type) && item.region.equals(region)) {
-                if (temp.containsKey(item.getName()))
-                    temp.get(item.getName()).update(item);
-                else
-                    temp.put(item.getName(), new RecommendItem(item));
-            }
+        String mostrecentYear = QSList.list.getLast().year;
+        for (int i = QSList.list.size()-1; i >= 0; i--) {
+            QSItem item = QSList.list.get(i);
+            int rank = Integer.parseInt(item.getRank());
+            if (rank <= bottom_num && rank >= top_num)
+                if (type.equals("All") || item.getType().equals(type))
+                    if (region.equals("All") || item.region.equals(region)) {
+                        if (temp.containsKey(item.getName()))
+                            temp.get(item.getName()).update(item);
+                        else if (mostrecentYear.equals(item.year))
+                            temp.put(item.getName(), new RecommendItem(item));
+                    }
         }
         RecommendList = FXCollections.observableArrayList(temp.values());
         Comparator<RecommendItem> bestRankComparator = Comparator.comparingInt(RItem -> Integer.parseInt(RItem.getBestRank()));

@@ -137,7 +137,6 @@ public class Controller {
 
     @FXML
     public TableColumn<RecommendItem, String> t3University;
-
     @FXML
     public TableColumn<RecommendItem, String> t3BestYear;
 
@@ -152,6 +151,8 @@ public class Controller {
 
     ObservableList<String> yearList = FXCollections.observableArrayList("2017", "2018", "2019", "2020", "2021", "2022");
     ObservableList<String> stringPropertyList = FXCollections.observableArrayList("country", "region", "size", "type", "researchOutput");
+    ObservableList<String> typeList = QSList.type;
+    ObservableList<String> regionList = QSList.region;
 
     @FXML
     private void initialize() {
@@ -175,6 +176,13 @@ public class Controller {
                 you need to add a blank or "All" option representing selection of all the country/region.
          */
         // T3
+        typeList.add("All");
+        typeList.remove("");
+        t3TypeChoiceBox.setItems(typeList);
+        t3TypeChoiceBox.setValue("All");
+        regionList.add("All");
+        t3RegionChoiceBox.setItems(regionList);
+        t3RegionChoiceBox.setValue("All");
         /*
             Your Code Here.
             1. Initialize the Choice boxes of type.
@@ -186,6 +194,8 @@ public class Controller {
 
     @FXML
     private void T1_onClickClear() {
+
+
         /*
             Your Code Here.
             Reset the Page Task1. (including the choice box, labels and charts)
@@ -253,6 +263,11 @@ public class Controller {
 
     @FXML
     private void T3_onClickClear() {
+        t3TypeChoiceBox.setValue("All");
+        t3RegionChoiceBox.setValue("All");
+        t3TopRankTextField.setText("");
+        t3BottomRankTextField.setText("");
+        t3TableView.getItems().clear();
         /*
             Your Code Here.
             Reset the Page Task 2.2. (including the text fields, choice boxes and the table view)
@@ -261,6 +276,19 @@ public class Controller {
 
     @FXML
     private void T3_onClickRecommend() {
+        String topValue = t3TopRankTextField.getText();
+        String bottomValue = t3BottomRankTextField.getText();
+        String type = t3TypeChoiceBox.getValue();
+        String region = t3RegionChoiceBox.getValue();
+        t3TableView.getItems().clear();
+        T3Analysis object = new T3Analysis(topValue, bottomValue, type, region);
+        t3University.setCellValueFactory(new PropertyValueFactory("name"));
+        t3BestYear.setCellValueFactory(new PropertyValueFactory("bestYear"));
+        t3BestRank.setCellValueFactory(new PropertyValueFactory("bestRank"));
+        t3RecentYear.setCellValueFactory(new PropertyValueFactory("recentYear"));
+        t3RecentRank.setCellValueFactory(new PropertyValueFactory("recentRank"));
+        t3TableView.getColumns().setAll(t3University, t3BestYear, t3BestRank, t3RecentYear, t3RecentRank);
+        t3TableView.setItems(object.getRecommendData());
         /*
             Your Code Here.
             When click search on Task3:
