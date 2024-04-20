@@ -167,6 +167,13 @@ public class Controller {
         t1BarChartChoiceBox.setItems(stringPropertyList);
         t1BarChartChoiceBox.setValue("type");
         t1BarChartLabel.setText("");
+
+        t1Rank.setCellValueFactory(new PropertyValueFactory<>("rank"));
+        t1University.setCellValueFactory(new PropertyValueFactory<>("name"));
+        t1Score.setCellValueFactory(new PropertyValueFactory<>("score"));
+        t1Country.setCellValueFactory(new PropertyValueFactory<>("country"));
+        t1City.setCellValueFactory(new PropertyValueFactory<>("city"));
+        t1Type.setCellValueFactory(new PropertyValueFactory<>("type"));
         // T2
         /*
             Your Code Here.
@@ -200,6 +207,23 @@ public class Controller {
             Your Code Here.
             Reset the Page Task1. (including the choice box, labels and charts)
          */
+
+        t1YearChoiceBox.setValue("2017");
+        t1PieChartChoiceBox.setValue("size");
+        t1BarChartChoiceBox.setValue("type");
+
+        // Clear labels
+        t1PieChartLabel.setText("");
+        t1BarChartLabel.setText("");
+
+        // Clear table data
+        t1DataTable.getItems().clear();
+
+        // Clear pie chart data
+        t1PieChart.getData().clear();
+
+        // Clear bar chart data
+        t1BarChart.getData().clear();
     }
 
     @FXML
@@ -215,6 +239,17 @@ public class Controller {
                 6. Update the Bar Chart, which shows the average score of selected property (t1BarChartChoiceBox).
             Please notice that we need listeners for monitoring the changes of choice box in pie chart and bar chart.
          */
+
+        String yearToSearch = t1YearChoiceBox.getValue();
+
+        T1Analysis analyser = new T1Analysis(yearToSearch);
+
+        for(QSItem item : analyser.tableList){
+            System.out.println(item.name);
+            System.out.println(item.rank);
+
+        }
+        t1DataTable.setItems(analyser.getTableList());
     }
 
     @FXML
