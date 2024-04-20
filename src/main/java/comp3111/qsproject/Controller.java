@@ -240,16 +240,16 @@ public class Controller {
             Please notice that we need listeners for monitoring the changes of choice box in pie chart and bar chart.
          */
 
+
+        //Table
         String yearToSearch = t1YearChoiceBox.getValue();
-
         T1Analysis analyser = new T1Analysis(yearToSearch);
-
-        for(QSItem item : analyser.tableList){
-            System.out.println(item.name);
-            System.out.println(item.rank);
-
-        }
         t1DataTable.setItems(analyser.getTableList());
+
+        //PieChart
+        String pieChartSearchName = t1PieChartChoiceBox.getValue();
+        ObservableList<PieChart.Data> pieChartData = analyser.getPieChartData(pieChartSearchName);
+        t1PieChart.setData(pieChartData);
     }
 
     @FXML

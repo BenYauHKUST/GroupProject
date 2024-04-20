@@ -43,9 +43,44 @@ public class T1Analysis {
             ]
          */
 
-        /*for (QSItem item : QSList.list){
-            if ()
-        }*/
+        HashMap<String, Integer> sumScores = new HashMap<>();
+
+        // Loop through the items in QSList.list
+        for (QSItem item : tableList) {
+            String key = "";
+
+            // Get the category value based on the searchName
+            switch (searchName) {
+                case "size":
+                    key = item.getSize();
+                    break;
+                case "type":
+                    key = item.getType();
+                    break;
+                case "country":
+                    key = item.getCountry();
+                    break;
+                case "researchOutput":
+                    key = item.getResearchOutput();
+                    break;
+                case "region":
+                    key = item.getRegion();
+                    break;
+            }
+
+            // Update the sum of scores for the category
+            if (sumScores.containsKey(key)) {
+                sumScores.put(key, sumScores.get(key) + 1);
+            } else {
+                sumScores.put(key, 1);
+            }
+        }
+
+        for (Map.Entry<String, Integer> entry : sumScores.entrySet()) {
+            System.out.println(entry.getKey());
+            pieChartData.add(new PieChart.Data(entry.getKey() + " " + entry.getValue(), entry.getValue()));
+        }
+
         return pieChartData;
     }
 
