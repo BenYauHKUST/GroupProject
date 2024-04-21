@@ -138,7 +138,6 @@ public class T1Analysis {
 
         for (Map.Entry<String, Double> entry : TableScores.entrySet()) {
             String label = entry.getKey();
-            System.out.println(entry.getKey());
             Integer count = 0;
 
             for (Map.Entry<String, Integer> CountEntry : CountMap.entrySet()){
