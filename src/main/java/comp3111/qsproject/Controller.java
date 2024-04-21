@@ -250,6 +250,12 @@ public class Controller {
         String pieChartSearchName = t1PieChartChoiceBox.getValue();
         ObservableList<PieChart.Data> pieChartData = analyser.getPieChartData(pieChartSearchName);
         t1PieChart.setData(pieChartData);
+
+        //BarChart
+        t1BarChart.getData().clear();
+        String barChartSearchName = t1BarChartChoiceBox.getValue();
+        XYChart.Series<String, Double> barChartData = analyser.getBarChartData(barChartSearchName);
+        t1BarChart.getData().add(barChartData);
     }
 
     @FXML

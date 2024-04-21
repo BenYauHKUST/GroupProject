@@ -77,7 +77,6 @@ public class T1Analysis {
         }
 
         for (Map.Entry<String, Integer> entry : sumScores.entrySet()) {
-            System.out.println(entry.getKey());
             pieChartData.add(new PieChart.Data(entry.getKey() + " " + entry.getValue(), entry.getValue()));
         }
 
@@ -86,18 +85,71 @@ public class T1Analysis {
 
     XYChart.Series<String, Double> getBarChartData(String searchName) {
         XYChart.Series<String, Double> barData= new XYChart.Series<>();
-        /*
-            Your Code Here.
-            Return the Bar Chart Data.
-            Bar Chart shows the Avg. of the score.
-            For example, when the user chooses "size", which means the searchName will be "size"
-            And Return an XYChart.Series with XYChart.Data
-            [
-                key: "L", value: the Average score of the Large size universities,
-                key: "M", value: the Average score of the Middle size universities,
-                key: "S", value: the Average score of the Small size universities,
-            ]
-         */
+
+
+        HashMap<String, Double> TableScores = new HashMap<>();
+
+        HashMap<String, Integer> CountMap = new HashMap<>();
+
+        for (QSItem item : tableList) {
+
+            String key = "";
+
+            // Get the category value based on the searchName
+            switch (searchName) {
+                case "size":
+                    key = item.getSize();
+                    break;
+                case "type":
+                    key = item.getType();
+                    break;
+                case "country":
+                    key = item.getCountry();
+                    break;
+                case "researchOutput":
+                    key = item.getResearchOutput();
+                    break;
+                case "region":
+                    key = item.getRegion();
+                    break;
+            }
+
+            if(key.isEmpty()){
+                continue;
+            }
+
+            // Update the sum of scores for the category
+            if (TableScores.containsKey(key) && !item.getScore().isEmpty()) {
+                Double newValue = TableScores.get(key) + Double.parseDouble(item.getScore());
+                TableScores.put(key, newValue);
+                CountMap.put(key, CountMap.get(key) + 1);
+            } else if (TableScores.containsKey(key) && item.getScore().isEmpty()) {
+                Double newValue = TableScores.get(key);
+                TableScores.put(key, newValue);
+                CountMap.put(key, CountMap.get(key) + 1);
+            } else if (!TableScores.containsKey(key) && !item.getScore().isEmpty()){
+                TableScores.put(key, Double.parseDouble(item.getScore()));
+                CountMap.put(key, 1);
+            }else{
+                TableScores.put(key, 0.0);
+                CountMap.put(key, 1);
+            }
+        }
+
+        for (Map.Entry<String, Double> entry : TableScores.entrySet()) {
+            String label = entry.getKey();
+            System.out.println(entry.getKey());
+            Integer count = 0;
+
+            for (Map.Entry<String, Integer> CountEntry : CountMap.entrySet()){
+                if(CountEntry.getKey().equals(label)){
+                    count = CountEntry.getValue();
+                }
+            }
+
+            barData.getData().add(new XYChart.Data<String, Double>(label, (entry.getValue()/count)));
+        }
+
         return barData;
     }
 
