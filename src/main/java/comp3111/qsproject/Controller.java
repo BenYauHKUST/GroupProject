@@ -1,17 +1,14 @@
 package comp3111.qsproject;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Controller {
@@ -153,6 +150,8 @@ public class Controller {
     ObservableList<String> stringPropertyList = FXCollections.observableArrayList("country", "region", "size", "type", "researchOutput");
     ObservableList<String> typeList = QSList.type;
     ObservableList<String> regionList = QSList.region;
+    ObservableList<String> universityList = QSList.university;
+    ObservableList<String> country_regionList = QSList.country;
 
     @FXML
     private void initialize() {
@@ -175,6 +174,18 @@ public class Controller {
         t1City.setCellValueFactory(new PropertyValueFactory<>("city"));
         t1Type.setCellValueFactory(new PropertyValueFactory<>("type"));
         // T2
+        universityList.sort(Comparator.comparing(item -> item));
+        t2University1ChoiceBox.setItems(universityList);
+        t2University1ChoiceBox.setValue("");
+        t2University2ChoiceBox.setItems(universityList);
+        t2University2ChoiceBox.setValue("");
+        country_regionList.addAll(regionList);
+        country_regionList.sort(Comparator.comparing(item -> item));
+        country_regionList.add("All");
+        t2CountryRegion1ChoiceBox.setItems(country_regionList);
+        t2CountryRegion1ChoiceBox.setValue("All");
+        t2CountryRegion2ChoiceBox.setItems(country_regionList);
+        t2CountryRegion1ChoiceBox.setValue("All");
         /*
             Your Code Here.
             1. Initialize the Choice boxes of university.
@@ -264,6 +275,25 @@ public class Controller {
             Your Code Here.
             Reset the Page Task 2.1. (including the choice boxes, check boxes and charts)
          */
+        //Clear Choice Boxes
+        t2University1ChoiceBox.setValue("");
+        t2University2ChoiceBox.setValue("");
+
+        //Clear Check Boxes
+        t22017CheckBox.setSelected(false);
+        t22018CheckBox.setSelected(false);
+        t22019CheckBox.setSelected(false);
+        t22020CheckBox.setSelected(false);
+        t22021CheckBox.setSelected(false);
+        t22022CheckBox.setSelected(false);
+
+        //Clear Charts
+        t21FacultyBarChart.getData().clear();
+        t21LineChart.getData().clear();
+        t21InternationalBarChart.getData().clear();
+        t21RankBarChart.getData().clear();
+        t21ScoreBarChart.getData().clear();
+        t21SFRBarChart.getData().clear();
     }
 
     @FXML
@@ -278,6 +308,40 @@ public class Controller {
                 5. Update the Bar Charts, which shows the average of selected property.
                 6. Update the line Chart, which shows two lines of score of each year.
          */
+        //Fetching two unis
+        String university1 = t2University1ChoiceBox.getValue();
+        String university2 = t2University2ChoiceBox.getValue();
+
+        //Fetching selected years
+        List<String> selectedYears = new ArrayList<>();
+        if (t22017CheckBox.isSelected()) selectedYears.add("2017");
+        if (t22018CheckBox.isSelected()) selectedYears.add("2018");
+        if (t22019CheckBox.isSelected()) selectedYears.add("2019");
+        if (t22020CheckBox.isSelected()) selectedYears.add("2020");
+        if (t22021CheckBox.isSelected()) selectedYears.add("2021");
+        if (t22022CheckBox.isSelected()) selectedYears.add("2022");
+
+        // Clear previous data
+        t21RankBarChart.getData().clear();
+        t21ScoreBarChart.getData().clear();
+        t21FacultyBarChart.getData().clear();
+        t21InternationalBarChart.getData().clear();
+        t21SFRBarChart.getData().clear();
+        t21LineChart.getData().clear();
+
+        // Make an Analyser
+        T21Analysis analyser = new T21Analysis(university1, university2, selectedYears);
+
+        // Update the Bar Charts
+        t21RankBarChart.getData().add(analyser.getBarChartData("rank"));
+        t21ScoreBarChart.getData().add(analyser.getBarChartData("score"));
+        t21FacultyBarChart.getData().add(analyser.getBarChartData("facultyCount"));
+        t21InternationalBarChart.getData().add(analyser.getBarChartData("internationalStudents"));
+        t21SFRBarChart.getData().add(analyser.getBarChartData("studentFacultyRatio"));
+
+        // Update the line Chart
+        t21LineChart.getData().addAll(analyser.getLineChartData("score"));
+
     }
 
     @FXML
@@ -286,6 +350,25 @@ public class Controller {
             Your Code Here.
             Reset the Page Task 2.2. (including the choice boxes, check boxes and charts)
          */
+        //Clear Choice Boxes
+        t2CountryRegion1ChoiceBox.setValue("All");
+        t2CountryRegion2ChoiceBox.setValue("All");
+
+        //Clear Check Boxes
+        t22017CheckBox2.setSelected(false);
+        t22018CheckBox2.setSelected(false);
+        t22019CheckBox2.setSelected(false);
+        t22020CheckBox2.setSelected(false);
+        t22021CheckBox2.setSelected(false);
+        t22022CheckBox2.setSelected(false);
+
+        //Clear Charts
+        t22FacultyBarChart.getData().clear();
+        t22LineChart.getData().clear();
+        t22InternationalBarChart.getData().clear();
+        t22RankBarChart.getData().clear();
+        t22ScoreBarChart.getData().clear();
+        t22SFRBarChart.getData().clear();
     }
 
     @FXML
@@ -300,6 +383,39 @@ public class Controller {
                 5. Update the Bar Charts, which shows the average of selected property.
                 6. Update the line Chart, which shows two lines of score of each year.
          */
+        //Fetching two country/region
+        String country_region1 = t2CountryRegion1ChoiceBox.getValue();
+        String country_region2 = t2CountryRegion2ChoiceBox.getValue();
+
+        //Fetching selected years
+        List<String> selectedYears = new ArrayList<>();
+        if (t22017CheckBox2.isSelected()) selectedYears.add("2017");
+        if (t22018CheckBox2.isSelected()) selectedYears.add("2018");
+        if (t22019CheckBox2.isSelected()) selectedYears.add("2019");
+        if (t22020CheckBox2.isSelected()) selectedYears.add("2020");
+        if (t22021CheckBox2.isSelected()) selectedYears.add("2021");
+        if (t22022CheckBox2.isSelected()) selectedYears.add("2022");
+
+        // Clear previous data
+        t22RankBarChart.getData().clear();
+        t22ScoreBarChart.getData().clear();
+        t22FacultyBarChart.getData().clear();
+        t22InternationalBarChart.getData().clear();
+        t22SFRBarChart.getData().clear();
+        t22LineChart.getData().clear();
+
+        // Make an Analyser
+        T22Analysis analyser = new T22Analysis(country_region1, country_region2, selectedYears);
+
+        // Update the Bar Charts
+        t22RankBarChart.getData().add(analyser.getBarChartData("rank"));
+        t22ScoreBarChart.getData().add(analyser.getBarChartData("score"));
+        t22FacultyBarChart.getData().add(analyser.getBarChartData("facultyCount"));
+        t22InternationalBarChart.getData().add(analyser.getBarChartData("internationalStudents"));
+        t22SFRBarChart.getData().add(analyser.getBarChartData("studentFacultyRatio"));
+
+        // Update the line Chart
+        t22LineChart.getData().addAll(analyser.getLineChartData("score"));
     }
 
     @FXML
