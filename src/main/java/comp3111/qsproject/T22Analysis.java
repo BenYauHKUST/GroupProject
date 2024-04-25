@@ -142,16 +142,19 @@ public class T22Analysis {
     }
 
     private double parseProp(String prop) {
-        try {
-            return Double.parseDouble(prop);
+        try{
+            //If there are no "," or "."
+            return Integer.parseInt(prop);
         } catch (NumberFormatException e) {
-            String rep_prop = prop.replaceAll(",", "");
-            try {
-                return Double.parseDouble(rep_prop);
-            } catch (NumberFormatException ex) {
-                // If parsing fails, return -1
-                return -1;
+            //If there are "," or "." but it represents numbers greater than 1000
+            String rep_prop = prop.replace(",", "");
+            rep_prop = rep_prop.replace(".", "");
+            int num = Integer.parseInt(rep_prop);
+            if (num < 1000) {
+                //If there is "." and it represents double
+                return Double.parseDouble(prop);
             }
+            return num;
         }
     }
 }
