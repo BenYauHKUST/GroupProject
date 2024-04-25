@@ -1,14 +1,20 @@
 package comp3111.qsproject;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 public class Controller {
@@ -130,6 +136,12 @@ public class Controller {
     @FXML
     public ChoiceBox<String> t3RegionChoiceBox;
     @FXML
+    public ChoiceBox<String> t3CountryChoiceBox;
+    @FXML
+    public Label t3RangeError;
+    @FXML
+    public Label t3CountryLabel;
+    @FXML
     public TableView<RecommendItem> t3TableView;
 
     @FXML
@@ -152,6 +164,7 @@ public class Controller {
     ObservableList<String> regionList = QSList.region;
     ObservableList<String> universityList = QSList.university;
     ObservableList<String> country_regionList = QSList.country;
+    HashMap<String, ObservableList<String>> countryRegionDict = QSList.countryRegion;
 
     @FXML
     private void initialize() {
@@ -201,18 +214,13 @@ public class Controller {
         regionList.add("All");
         t3RegionChoiceBox.setItems(regionList);
         t3RegionChoiceBox.setValue("All");
-        /*
-            Your Code Here.
-            1. Initialize the Choice boxes of type.
-            2. Initialize the Choice boxes of region.
-            3. For choice boxes of region,
-                you need to add a blank or "All" option representing selection of all the region.
-         */
+        for (String key : countryRegionDict.keySet())
+            countryRegionDict.get(key).add("All");
+        t3RegionChoiceBox.setOnAction(this::t3handleRegionSelection);
     }
 
     @FXML
     private void T1_onClickClear() {
-
 
         /*
             Your Code Here.
@@ -250,7 +258,6 @@ public class Controller {
                 6. Update the Bar Chart, which shows the average score of selected property (t1BarChartChoiceBox).
             Please notice that we need listeners for monitoring the changes of choice box in pie chart and bar chart.
          */
-
 
         //Table
         String yearToSearch = t1YearChoiceBox.getValue();
@@ -423,38 +430,56 @@ public class Controller {
         t3TypeChoiceBox.setValue("All");
         t3RegionChoiceBox.setValue("All");
         t3TopRankTextField.setText("");
+        t3RangeError.setText("");
         t3BottomRankTextField.setText("");
         t3TableView.getItems().clear();
-        /*
-            Your Code Here.
-            Reset the Page Task 2.2. (including the text fields, choice boxes and the table view)
-         */
     }
 
     @FXML
     private void T3_onClickRecommend() {
         String topValue = t3TopRankTextField.getText();
         String bottomValue = t3BottomRankTextField.getText();
+        if (topValue.isEmpty() || bottomValue.isEmpty()) {
+            t3RangeError.setText("Missing Top and/or Bottom values.");
+            return;
+        }
+        try {
+            int x = Integer.parseInt(topValue);
+            int y = Integer.parseInt(bottomValue);
+            if (x > y) {
+                t3RangeError.setText("Invalid input of Top and/or Bottom values.");
+                return;
+            }
+        }
+        catch (Exception e) {
+            t3RangeError.setText("Invalid input of Top and/or Bottom values.");
+            return;
+        }
         String type = t3TypeChoiceBox.getValue();
         String region = t3RegionChoiceBox.getValue();
+        String country = t3CountryChoiceBox.getValue();
         t3TableView.getItems().clear();
-        T3Analysis object = new T3Analysis(topValue, bottomValue, type, region);
-        t3University.setCellValueFactory(new PropertyValueFactory("name"));
-        t3BestYear.setCellValueFactory(new PropertyValueFactory("bestYear"));
-        t3BestRank.setCellValueFactory(new PropertyValueFactory("bestRank"));
-        t3RecentYear.setCellValueFactory(new PropertyValueFactory("recentYear"));
-        t3RecentRank.setCellValueFactory(new PropertyValueFactory("recentRank"));
+        T3Analysis object = new T3Analysis(topValue, bottomValue, type, region, country);
+        t3University.setCellValueFactory(new PropertyValueFactory<>("name"));
+        t3BestYear.setCellValueFactory(new PropertyValueFactory<>("bestYear"));
+        t3BestRank.setCellValueFactory(new PropertyValueFactory<>("bestRank"));
+        t3RecentYear.setCellValueFactory(new PropertyValueFactory<>("recentYear"));
+        t3RecentRank.setCellValueFactory(new PropertyValueFactory<>("recentRank"));
         t3TableView.getColumns().setAll(t3University, t3BestYear, t3BestRank, t3RecentYear, t3RecentRank);
         t3TableView.setItems(object.getRecommendData());
-        /*
-            Your Code Here.
-            When click search on Task3:
-                1. Fetch the top and bottom boundary requirement of score.
-                2. Fetch the type and region requirements.
-                3. Clear previous data.
-                4. Make an Analyser.
-                5. Update the Table View.
-         */
     }
 
+    private void t3handleRegionSelection(ActionEvent event) {
+        String selectedRegion = t3RegionChoiceBox.getValue();
+        if (selectedRegion.equals("All")) {
+            t3CountryChoiceBox.setVisible(false);
+            t3CountryLabel.setVisible(false);
+        }
+        else {
+            t3CountryChoiceBox.setVisible(true);
+            t3CountryLabel.setVisible(true);
+            t3CountryChoiceBox.setItems(countryRegionDict.get(selectedRegion));
+            t3CountryChoiceBox.setValue("All");
+        }
+    }
 }
