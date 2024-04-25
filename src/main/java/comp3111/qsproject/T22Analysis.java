@@ -19,6 +19,24 @@ public class T22Analysis {
             Sort country/region lists by the years.
             Hint: QSList.list is a static property.
          */
+        CountryRegion1Name = country_region_1;
+        CountryRegion2Name = country_region_2;
+
+        //Collect QSItem
+        for (QSItem item : QSList.list) {
+            if (years.contains(item.year)) {
+                if (item.country.equals(country_region_1) || item.region.equals(country_region_1)) {
+                    CountryRegion1List.add(item);
+                }
+                if (item.country.equals(country_region_2) || item.region.equals(country_region_2)) {
+                    CountryRegion2List.add(item);
+                }
+
+            }
+        }
+        // Sort CountryRegion1List and CountryRegion2List based on year
+        CountryRegion1List.sort(Comparator.comparing(item -> item.year));
+        CountryRegion2List.sort(Comparator.comparing(item -> item.year));
     }
 
     XYChart.Series<Double, String> getBarChartData(String searchName) {
@@ -38,6 +56,30 @@ public class T22Analysis {
             For example, the string "3,143" or "3.143" can not transfer to Integer or Double directly.
             Careful process these data.
          */
+        //Calculating Avg of Country/Region 2
+        double total = 0.0;
+        int count = 0;
+        for (QSItem item : CountryRegion2List) {
+            double val = parseProp(item.getProperty(searchName));
+            if (val!=-1) {
+                total+=val;
+                count++;
+            }
+        }
+        barData.getData().add(new XYChart.Data<>(total/count, "Country/Region 2"));
+
+        //Calculating Avg of Country/Region 1
+        total = 0.0;
+        count = 0;
+        for (QSItem item : CountryRegion1List) {
+            double val = parseProp(item.getProperty(searchName));
+            if (val!=-1) {
+                total+=val;
+                count++;
+            }
+        }
+        barData.getData().add(new XYChart.Data<>(total/count, "Country/Region 1"));
+
         return barData;
     }
 
@@ -57,6 +99,62 @@ public class T22Analysis {
             For example, the string "3,143" or "3.143" can not transfer to Integer or Double directly.
             Careful process these data.
          */
+        // Create series for Country/Region 2
+        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
+        series1.setName(CountryRegion2Name);
+        fillData(series1, CountryRegion2List, searchName);
+        lineData.add(series1);
+
+        // Create series for Country/Region 1
+        XYChart.Series<String, Double> series2 = new XYChart.Series<>();
+        series2.setName(CountryRegion1Name);
+        fillData(series2, CountryRegion1List, searchName);
+        lineData.add(series2);
+
         return lineData;
+    }
+
+    private void fillData(XYChart.Series<String, Double> series, ObservableList<QSItem> itemList, String searchName) {
+        String currentYear = null;
+        double total = 0;
+        int count = 0;
+
+        for (QSItem item : itemList) {
+            if (currentYear == null || !currentYear.equals(item.year)) {
+                if (currentYear != null) {
+                    series.getData().add(new XYChart.Data<>(currentYear, total / count));
+                }
+                currentYear = item.year;
+                total = 0;
+                count = 0;
+            }
+            double val = parseProp(item.getProperty(searchName));
+            if (val != -1) {
+                total += val;
+                count++;
+            }
+        }
+
+        // Add the last data point
+        if (currentYear != null) {
+            series.getData().add(new XYChart.Data<>(currentYear, total / count));
+        }
+    }
+
+    private double parseProp(String prop) {
+        try{
+            //If there are no "," or "."
+            return Integer.parseInt(prop);
+        } catch (NumberFormatException e) {
+            //If there are "," or "." but it represents numbers greater than 1000
+            String rep_prop = prop.replace(",", "");
+            rep_prop = rep_prop.replace(".", "");
+            int num = Integer.parseInt(rep_prop);
+            if (num < 1000) {
+                //If there is "." and it represents double
+                return Double.parseDouble(prop);
+            }
+            return num;
+        }
     }
 }
