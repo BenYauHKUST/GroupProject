@@ -142,6 +142,7 @@ public class T22Analysis {
     }
 
     private double parseProp(String prop) {
+        //Assumption: strings with more than 3 digits are integer values greater than 1000
         try{
             //If there are no "," or "."
             return Integer.parseInt(prop);
