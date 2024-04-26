@@ -7,6 +7,7 @@ module comp3111.qsproject {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires javacsv;
+    requires javafx.media;
 
     opens comp3111.qsproject to javafx.fxml;
     exports comp3111.qsproject;
