@@ -1,27 +1,28 @@
 package comp3111.qsproject;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Font;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
 public class Controller {
-
+    @FXML
+    public ToggleButton t0MusicButton;
+    MediaPlayer mediaPlayer;
     /* T1 Controller */
     public TableView<QSItem> t1DataTable;
-
     @FXML
     public ChoiceBox<String> t1YearChoiceBox;
 
@@ -132,13 +133,15 @@ public class Controller {
     @FXML
     public TextField t3BottomRankTextField;
     @FXML
-    public ChoiceBox<String> t3TypeChoiceBox;
+    public ComboBox<String> t3TypeComboBox;
     @FXML
-    public ChoiceBox<String> t3RegionChoiceBox;
+    public ComboBox<String> t3RegionComboBox;
     @FXML
-    public ChoiceBox<String> t3CountryChoiceBox;
+    public ComboBox<String> t3CountryComboBox;
     @FXML
     public Label t3RangeError;
+    @FXML
+    public Label t3ResultMessage;
     @FXML
     public Label t3CountryLabel;
     @FXML
@@ -170,6 +173,15 @@ public class Controller {
     private void initialize() {
         // Whole Program Information
         QSList.initialize();
+
+        // Loop background music
+        t0MusicButton.setSelected(false);
+        String path = getClass().getResource("UniversityAnthem.mp3").getPath();
+        Media source = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(source);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        t0MusicButton.setOnAction(this::handelMusic);
+
         // T1
         t1YearChoiceBox.setItems(yearList);
         t1YearChoiceBox.setValue("2017");
@@ -207,16 +219,20 @@ public class Controller {
                 you need to add a blank or "All" option representing selection of all the country/region.
          */
         // T3
-        typeList.add("All");
-        typeList.remove("");
-        t3TypeChoiceBox.setItems(typeList);
-        t3TypeChoiceBox.setValue("All");
+        typeList.add("All"); typeList.remove("");
+        t3TypeComboBox.setItems(typeList);
+        t3TypeComboBox.setValue("All");
+
         regionList.add("All");
-        t3RegionChoiceBox.setItems(regionList);
-        t3RegionChoiceBox.setValue("All");
+        t3RegionComboBox.setItems(regionList);
+        t3RegionComboBox.setValue("All");
+        t3RangeError.setText("");
+
         for (String key : countryRegionDict.keySet())
             countryRegionDict.get(key).add("All");
-        t3RegionChoiceBox.setOnAction(this::t3handleRegionSelection);
+        t3RegionComboBox.setOnAction(this::t3handleRegionSelection);
+
+        t3ResultMessage.setText("");
     }
 
     @FXML
@@ -427,16 +443,18 @@ public class Controller {
 
     @FXML
     private void T3_onClickClear() {
-        t3TypeChoiceBox.setValue("All");
-        t3RegionChoiceBox.setValue("All");
+        t3TypeComboBox.setValue("All");
+        t3RegionComboBox.setValue("All");
         t3TopRankTextField.setText("");
         t3RangeError.setText("");
         t3BottomRankTextField.setText("");
         t3TableView.getItems().clear();
+        t3ResultMessage.setText("");
     }
 
     @FXML
     private void T3_onClickRecommend() {
+        t3ResultMessage.setText("");
         String topValue = t3TopRankTextField.getText();
         String bottomValue = t3BottomRankTextField.getText();
         if (topValue.isEmpty() || bottomValue.isEmpty()) {
@@ -446,18 +464,19 @@ public class Controller {
         try {
             int x = Integer.parseInt(topValue);
             int y = Integer.parseInt(bottomValue);
-            if (x > y) {
+            if (x > y || x <= 0) {
                 t3RangeError.setText("Invalid input of Top and/or Bottom values.");
                 return;
             }
         }
         catch (Exception e) {
-            t3RangeError.setText("Invalid input of Top and/or Bottom values.");
+            t3RangeError.setText("Input for Top and/or Bottom values should be integer.");
             return;
         }
-        String type = t3TypeChoiceBox.getValue();
-        String region = t3RegionChoiceBox.getValue();
-        String country = t3CountryChoiceBox.getValue();
+        t3RangeError.setText("");
+        String type = t3TypeComboBox.getValue();
+        String region = t3RegionComboBox.getValue();
+        String country = t3CountryComboBox.getValue();
         t3TableView.getItems().clear();
         T3Analysis object = new T3Analysis(topValue, bottomValue, type, region, country);
         t3University.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -466,20 +485,39 @@ public class Controller {
         t3RecentYear.setCellValueFactory(new PropertyValueFactory<>("recentYear"));
         t3RecentRank.setCellValueFactory(new PropertyValueFactory<>("recentRank"));
         t3TableView.getColumns().setAll(t3University, t3BestYear, t3BestRank, t3RecentYear, t3RecentRank);
-        t3TableView.setItems(object.getRecommendData());
+        ObservableList<RecommendItem> temp = object.getRecommendData();
+        if (temp.isEmpty()) {
+            t3ResultMessage.setText("No university in recommendation list!");
+        }
+        else {
+            t3ResultMessage.setText("Results have been successfully shown!");
+        }
+        t3TableView.setItems(temp);
+
     }
 
     private void t3handleRegionSelection(ActionEvent event) {
-        String selectedRegion = t3RegionChoiceBox.getValue();
+        String selectedRegion = t3RegionComboBox.getValue();
         if (selectedRegion.equals("All")) {
-            t3CountryChoiceBox.setVisible(false);
+            t3CountryComboBox.setVisible(false);
             t3CountryLabel.setVisible(false);
         }
         else {
-            t3CountryChoiceBox.setVisible(true);
+            t3CountryComboBox.setVisible(true);
             t3CountryLabel.setVisible(true);
-            t3CountryChoiceBox.setItems(countryRegionDict.get(selectedRegion));
-            t3CountryChoiceBox.setValue("All");
+            t3CountryComboBox.setItems(countryRegionDict.get(selectedRegion));
+            t3CountryComboBox.setValue("All");
+        }
+    }
+
+    private void handelMusic(ActionEvent event) {
+        if (t0MusicButton.isSelected()) {
+            mediaPlayer.play();
+            t0MusicButton.setText("Music On!");
+        }
+        else {
+            mediaPlayer.pause();
+            t0MusicButton.setText("Music Off!");
         }
     }
 }
