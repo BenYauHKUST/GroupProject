@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class T3AnalysisTest {
     @Test
     void T3Analysis() {
+        QSList.initialize();
         String topValue = "1";
         String bottomValue = "11";
         String type = "Public";
@@ -19,5 +20,4 @@ class T3AnalysisTest {
         String actual_name = data.getFirst().name;
         assertEquals(expected_name, actual_name);
     }
-
 }
