@@ -8,12 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class QSListTest {
     @Test
     void initialize() {
-        QSList temp = new QSList();
-        temp.initialize();
         String [] expected = {"Private","Public",""};
-        String [] actual = new String[temp.type.size()];
-        for (int i = 0; i < temp.type.size(); i++) {
-            actual[i] = temp.type.get(i);
+        String [] actual = new String[QSList.type.size()];
+        for (int i = 0; i < QSList.type.size(); i++) {
+            actual[i] = QSList.type.get(i);
         }
         Arrays.sort(expected);
         Arrays.sort(actual);
