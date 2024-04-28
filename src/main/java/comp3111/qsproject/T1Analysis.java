@@ -30,18 +30,6 @@ public class T1Analysis {
 
     ObservableList<PieChart.Data> getPieChartData(String searchName) {
         ObservableList<PieChart.Data> pieChartData= FXCollections.observableArrayList();
-        /*
-            Your Code Here.
-            Return the Pie Chart Data.
-            Pie Chart shows the SUM of the score.
-            For example, when the user chooses "size", which means the searchName will be "size"
-            And Return an ObservableList with PieChart.Data
-            [
-                key: "L", value: the Sum score of the Large size universities,
-                key: "M", value: the Sum score of the Middle size universities,
-                key: "S", value: the Sum score of the Small size universities,
-            ]
-         */
 
         HashMap<String, Integer> sumScores = new HashMap<>();
 

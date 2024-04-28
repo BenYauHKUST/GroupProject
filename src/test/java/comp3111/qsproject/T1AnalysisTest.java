@@ -134,5 +134,257 @@ class T1AnalysisTest {
         assertEquals(0, analysis.tableList.size());
     }
 
+    @Test
+    void getPieChartDataTest(){
+        QSList.list.clear();
+        QSList.list.add(new QSItem(new String[]{
+                "University ABC", // name
+                "2022",           // year
+                "1",              // rank
+                "99.9",           // score
+                "",
+                "Country X",      // country
+                "City Y",         // city
+                "Region Z",       // region
+                "",
+                "Public",         // type
+                "Very High",      // researchOutput
+                "15:1",           // studentFacultyRatio
+                "5000",           // internationalStudents
+                "Large",          // size
+                "1000"            // facultyCount
+        }));
 
+        QSList.list.add(new QSItem(new String[]{
+                "University DEF", // name
+                "2022",           // year
+                "2",              // rank
+                "98.5",           // score
+                "",
+                "Country Y",      // country
+                "City Z",         // city
+                "Region A",       // region
+                "",
+                "Private",        // type
+                "High",           // researchOutput
+                "20:1",           // studentFacultyRatio
+                "3000",           // internationalStudents
+                "Medium",         // size
+                "800"             // facultyCount
+        }));
+
+        QSList.list.add(new QSItem(new String[]{
+                "University GHI", // name
+                "2024",           // year
+                "3",              // rank
+                "97.0",           // score
+                "",
+                "Country Z",      // country
+                "City A",         // city
+                "Region B",       // region
+                "",
+                "Private",        // type
+                "Moderate",       // researchOutput
+                "10:1",           // studentFacultyRatio
+                "1000",           // internationalStudents
+                "Small",          // size
+                "500"             // facultyCount
+        }));
+
+        T1Analysis analysis = new T1Analysis("");
+        assertEquals(0, analysis.tableList.size());
+    }
+
+    @Test
+    void getPieChartDataTes(){
+        QSList.list.clear();
+        QSList.list.add(new QSItem(new String[]{
+                "University ABC", // name
+                "2022",           // year
+                "1",              // rank
+                "99.9",           // score
+                "",
+                "Country X",      // country
+                "City Y",         // city
+                "Region Z",       // region
+                "",
+                "Public",         // type
+                "Very High",      // researchOutput
+                "15:1",           // studentFacultyRatio
+                "5000",           // internationalStudents
+                "Large",          // size
+                "1000"            // facultyCount
+        }));
+
+        QSList.list.add(new QSItem(new String[]{
+                "University DEF", // name
+                "2024",           // year
+                "2",              // rank
+                "98.5",           // score
+                "",
+                "Country Y",      // country
+                "City Z",         // city
+                "Region A",       // region
+                "",
+                "Private",        // type
+                "High",           // researchOutput
+                "20:1",           // studentFacultyRatio
+                "3000",           // internationalStudents
+                "Medium",         // size
+                "800"             // facultyCount
+        }));
+
+        QSList.list.add(new QSItem(new String[]{
+                "University GHI", // name
+                "2024",           // year
+                "3",              // rank
+                "97.0",           // score
+                "",
+                "Country Z",      // country
+                "City A",         // city
+                "Region B",       // region
+                "",
+                "Private",        // type
+                "Moderate",       // researchOutput
+                "10:1",           // studentFacultyRatio
+                "1000",           // internationalStudents
+                "Small",          // size
+                "500"             // facultyCount
+        }));
+
+        T1Analysis t1Analysis = new T1Analysis("2024");
+        assertEquals(2, t1Analysis.getPieChartData("size").size());
+        assertEquals(1, t1Analysis.getPieChartData("type").size());
+        assertEquals(2, t1Analysis.getPieChartData("country").size());
+        assertEquals(2, t1Analysis.getPieChartData("researchOutput").size());
+        assertEquals(2, t1Analysis.getPieChartData("region").size());
+
+    }
+
+    @Test
+    public void testGetBarChartData() {
+
+        QSList.list.clear();
+        QSList.list.add(new QSItem(new String[]{
+                "University ABC", // name
+                "2022",           // year
+                "1",              // rank
+                "99.9",           // score
+                "",
+                "Country X",      // country
+                "City Y",         // city
+                "Region Z",       // region
+                "",
+                "Public",         // type
+                "Very High",      // researchOutput
+                "15:1",           // studentFacultyRatio
+                "5000",           // internationalStudents
+                "Large",          // size
+                "1000"            // facultyCount
+        }));
+
+        QSList.list.add(new QSItem(new String[]{
+                "University DEF", // name
+                "2024",           // year
+                "2",              // rank
+                "98.5",           // score
+                "",
+                "Country Y",      // country
+                "City Z",         // city
+                "Region A",       // region
+                "",
+                "Private",        // type
+                "High",           // researchOutput
+                "20:1",           // studentFacultyRatio
+                "3000",           // internationalStudents
+                "Medium",         // size
+                "800"             // facultyCount
+        }));
+
+        QSList.list.add(new QSItem(new String[]{
+                "University GHI", // name
+                "2024",           // year
+                "3",              // rank
+                "97.0",           // score
+                "",
+                "Country Z",      // country
+                "City A",         // city
+                "Region B",       // region
+                "",
+                "Private",        // type
+                "Moderate",       // researchOutput
+                "10:1",           // studentFacultyRatio
+                "1000",           // internationalStudents
+                "Small",          // size
+                "500"             // facultyCount
+        }));
+
+        T1Analysis t1Analysis = new T1Analysis("2024");
+        assertEquals(2, t1Analysis.getBarChartData("size").getData().size());
+        assertEquals(1, t1Analysis.getBarChartData("type").getData().size());
+        assertEquals(2, t1Analysis.getBarChartData("country").getData().size());
+        assertEquals(2, t1Analysis.getBarChartData("researchOutput").getData().size());
+        assertEquals(2, t1Analysis.getBarChartData("region").getData().size());
+    }
+
+    @Test
+    void GetTableListTest(){
+        QSList.list.clear();
+        QSList.list.add(new QSItem(new String[]{
+                "University ABC", // name
+                "2022",           // year
+                "1",              // rank
+                "99.9",           // score
+                "",
+                "Country X",      // country
+                "City Y",         // city
+                "Region Z",       // region
+                "",
+                "Public",         // type
+                "Very High",      // researchOutput
+                "15:1",           // studentFacultyRatio
+                "5000",           // internationalStudents
+                "Large",          // size
+                "1000"            // facultyCount
+        }));
+
+        QSList.list.add(new QSItem(new String[]{
+                "University DEF", // name
+                "2024",           // year
+                "2",              // rank
+                "98.5",           // score
+                "",
+                "Country Y",      // country
+                "City Z",         // city
+                "Region A",       // region
+                "",
+                "Private",        // type
+                "High",           // researchOutput
+                "20:1",           // studentFacultyRatio
+                "3000",           // internationalStudents
+                "Medium",         // size
+                "800"             // facultyCount
+        }));
+
+        QSList.list.add(new QSItem(new String[]{
+                "University GHI", // name
+                "2024",           // year
+                "3",              // rank
+                "97.0",           // score
+                "",
+                "Country Z",      // country
+                "City A",         // city
+                "Region B",       // region
+                "",
+                "Private",        // type
+                "Moderate",       // researchOutput
+                "10:1",           // studentFacultyRatio
+                "1000",           // internationalStudents
+                "Small",          // size
+                "500"             // facultyCount
+        }));
+
+        T1Analysis t1Analysis = new T1Analysis("2024");
+        assertEquals(2, t1Analysis.getTableList().size());
+    }
 }
