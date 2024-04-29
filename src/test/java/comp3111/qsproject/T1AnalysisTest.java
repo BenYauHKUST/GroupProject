@@ -4,8 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * A program to Test T1Analysis.
+ * @author <a href=mailto:wkyauad@connect.ust.hk>YAU WAI KEUNG</a>
+ * @version 1.0
+ */
 class T1AnalysisTest {
 
+    /**
+     * Constructor testing
+     */
     @Test
     public void testConstructor() {
         // Initialize QSList with some test data
@@ -72,6 +80,9 @@ class T1AnalysisTest {
     }
 
 
+    /**
+     * table list testing without searching year.
+     */
     @Test
     void getTableListTest2() {
 
@@ -134,6 +145,9 @@ class T1AnalysisTest {
         assertEquals(0, analysis.tableList.size());
     }
 
+    /**
+     * PieChartData Testing with no search input.
+     */
     @Test
     void getPieChartDataTest(){
         QSList.list.clear();
@@ -195,6 +209,9 @@ class T1AnalysisTest {
         assertEquals(0, analysis.tableList.size());
     }
 
+    /**
+     * PieChartData Testing with specific search year and types.
+     */
     @Test
     void getPieChartDataTes(){
         QSList.list.clear();
@@ -261,6 +278,9 @@ class T1AnalysisTest {
 
     }
 
+    /**
+     * BarChart Testing with specific search year and types.
+     */
     @Test
     public void testGetBarChartData() {
 
@@ -327,6 +347,9 @@ class T1AnalysisTest {
         assertEquals(2, t1Analysis.getBarChartData("region").getData().size());
     }
 
+    /**
+     * table list testing with searching year.
+     */
     @Test
     void GetTableListTest(){
         QSList.list.clear();

@@ -7,8 +7,17 @@ import javafx.scene.chart.XYChart;
 
 import java.util.*;
 
+/**
+ * A program to search and visualize the data.
+ * @author <a href=mailto:wkyauad@connect.ust.hk>YAU WAI KEUNG</a>
+ * @version 1.0
+ */
 public class T1Analysis {
     public ObservableList<QSItem> tableList = FXCollections.observableArrayList();
+
+    /**
+     * @param year The year to search.
+     */
     T1Analysis (String year) {
         /*
             Your Code Here.
@@ -24,10 +33,17 @@ public class T1Analysis {
         }
     }
 
+    /**
+     * @return tableList.
+     */
     ObservableList<QSItem> getTableList() {
         return tableList;
     }
 
+    /**
+     * @param searchName type to search
+     * @return pieChartData in the specific year and type.
+     */
     ObservableList<PieChart.Data> getPieChartData(String searchName) {
         ObservableList<PieChart.Data> pieChartData= FXCollections.observableArrayList();
 
@@ -71,6 +87,10 @@ public class T1Analysis {
         return pieChartData;
     }
 
+    /**
+     * @param searchName type to search
+     * @return barChartData in the specific year and type
+     */
     XYChart.Series<String, Double> getBarChartData(String searchName) {
         XYChart.Series<String, Double> barData= new XYChart.Series<>();
 
