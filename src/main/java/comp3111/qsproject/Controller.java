@@ -235,6 +235,9 @@ public class Controller {
         t3ResultMessage.setText("");
     }
 
+    /**
+     * clear data when clear button is clicked.
+     */
     @FXML
     private void T1_onClickClear() {
 
@@ -261,19 +264,11 @@ public class Controller {
         t1BarChart.getData().clear();
     }
 
+    /**
+     * Initialize the data after the search was pressed.
+     */
     @FXML
     private void T1_onClickSearch() {
-        /*
-            Your Code Here.
-            When click search on Task1:
-                1. Fetch the year from the choice box.
-                2. Clear previous data.
-                3. Make an Analyser.
-                4. Update the Table view, which shows Information about universities.
-                5. Update the Pie Chart, which shows the sum score of selected property (t1PieChartChoiceBox).
-                6. Update the Bar Chart, which shows the average score of selected property (t1BarChartChoiceBox).
-            Please notice that we need listeners for monitoring the changes of choice box in pie chart and bar chart.
-         */
 
         //Table
         String yearToSearch = t1YearChoiceBox.getValue();
