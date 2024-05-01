@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * To test the initialize function
+ */
 class QSListTest {
     @Test
     void initialize() {

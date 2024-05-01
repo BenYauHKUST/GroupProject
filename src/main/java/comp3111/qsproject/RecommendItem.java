@@ -1,5 +1,10 @@
 package comp3111.qsproject;
 
+/**
+ * A class to store the item information for the RecommendList.
+ * @author <a href=mailto:ytyuad@connect.ust.hk>YU YU TAO</a>
+ * @version 1.0
+ */
 public class RecommendItem {
     String name;
 
@@ -11,6 +16,10 @@ public class RecommendItem {
 
     String recentRank;
 
+    /**
+     * Initialize a RecommendItem with the given QSItem
+     * @param item a QSItem used for generation of RecommendItem
+     */
     RecommendItem(QSItem item) {
         name = item.name;
         bestYear = item.year;
@@ -19,6 +28,10 @@ public class RecommendItem {
         recentRank = item.rank;
     }
 
+    /**
+     * To update the RecommendItem given a new QSItem in a different year
+     * @param item a QSItem used for update of RecommendItem
+     */
     void update(QSItem item) {
         assert (item.name.equals(name));
         if (Integer.parseInt(item.getRank()) < Integer.parseInt(bestRank)) {

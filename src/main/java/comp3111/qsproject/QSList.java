@@ -23,6 +23,9 @@ public class QSList {
     public static ObservableList<String> country = FXCollections.observableArrayList();
     public static HashMap<String, ObservableList<String>> countryRegion = new HashMap<>();
 
+    /**
+     * To initialize the QSList container based on the qs dataset
+     */
     public static void initialize() {
         try {
             String csvFilePath = "qs.csv";

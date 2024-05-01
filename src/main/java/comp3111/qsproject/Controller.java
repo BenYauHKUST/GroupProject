@@ -169,6 +169,9 @@ public class Controller {
     ObservableList<String> country_regionList = QSList.country;
     HashMap<String, ObservableList<String>> countryRegionDict = QSList.countryRegion;
 
+    /**
+     * To initialize the information in all the tasks and program
+     */
     @FXML
     private void initialize() {
         // Whole Program Information
@@ -436,6 +439,9 @@ public class Controller {
         t22LineChart.getData().addAll(analyser.getLineChartData("score"));
     }
 
+    /**
+     * To clear user input for Task 3 window
+     */
     @FXML
     private void T3_onClickClear() {
         t3TypeComboBox.setValue("All");
@@ -447,6 +453,9 @@ public class Controller {
         t3ResultMessage.setText("");
     }
 
+    /**
+     * To generate and display recommendation outputs based on user inputs
+     */
     @FXML
     private void T3_onClickRecommend() {
         t3ResultMessage.setText("");
@@ -491,6 +500,10 @@ public class Controller {
 
     }
 
+    /**
+     * To set the choice list based on the selected region in t3RegionComboBox
+     * @param event the ActionEvent event of t3RegionComboBox
+     */
     private void t3handleRegionSelection(ActionEvent event) {
         String selectedRegion = t3RegionComboBox.getValue();
         if (selectedRegion.equals("All")) {
@@ -505,6 +518,10 @@ public class Controller {
         }
     }
 
+    /**
+     * To play/pause the background music based on the t0MusicButton state
+     * @param event the ActionEvent event of t0MusicButton
+     */
     private void handelMusic(ActionEvent event) {
         if (t0MusicButton.isSelected()) {
             mediaPlayer.play();
