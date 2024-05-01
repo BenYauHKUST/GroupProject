@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * To test the T3Analysis class.
+ */
 class T3AnalysisTest {
     @Test
     void T3Analysis() {
