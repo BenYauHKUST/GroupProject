@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class T3AnalysisTest {
     @Test
     void T3Analysis() {
+        QSList.clear();
         QSList.initialize();
         String topValue = "1";
         String bottomValue = "11";
