@@ -1,6 +1,5 @@
 package comp3111.qsproject;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
