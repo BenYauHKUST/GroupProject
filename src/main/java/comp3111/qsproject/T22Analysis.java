@@ -6,11 +6,23 @@ import javafx.scene.chart.XYChart;
 
 import java.util.*;
 
+/**
+ * A class to search, compare and visualize data.
+ * @author <a href=mailto:fsam@connect.ust.hk>SAM FETULLAKH</a>
+ * @version 1.0
+ */
+
 public class T22Analysis {
     public ObservableList<QSItem> CountryRegion1List = FXCollections.observableArrayList();
     public ObservableList<QSItem> CountryRegion2List = FXCollections.observableArrayList();
     private String CountryRegion1Name;
     private String CountryRegion2Name;
+
+    /**
+     * @param country_region_1 The University 1 to search.
+     * @param country_region_2 The University 2 to search.
+     * @param years The years for which collect data.
+     */
 
     T22Analysis(String country_region_1, String country_region_2, List<String> years) {
         /*
@@ -38,6 +50,11 @@ public class T22Analysis {
         CountryRegion1List.sort(Comparator.comparing(item -> item.year));
         CountryRegion2List.sort(Comparator.comparing(item -> item.year));
     }
+
+    /**
+     * @param searchName type to search
+     * @return BarChartData for given country/regions and years
+     */
 
     XYChart.Series<Double, String> getBarChartData(String searchName) {
         XYChart.Series<Double, String> barData= new XYChart.Series<>();
@@ -83,6 +100,11 @@ public class T22Analysis {
         return barData;
     }
 
+    /**
+     * @param searchName type to search
+     * @return LineChartData for given country/regions and years
+     */
+
     List<XYChart.Series<String, Double>> getLineChartData(String searchName) {
         List<XYChart.Series<String, Double>> lineData = new ArrayList<>();
         /*
@@ -114,6 +136,12 @@ public class T22Analysis {
         return lineData;
     }
 
+    /**
+     * @param series Chart series to fill with data
+     * @param itemList QSItems to collect data about
+     * @param searchName type to search
+     */
+
     private void fillData(XYChart.Series<String, Double> series, ObservableList<QSItem> itemList, String searchName) {
         String currentYear = null;
         double total = 0;
@@ -140,6 +168,11 @@ public class T22Analysis {
             series.getData().add(new XYChart.Data<>(currentYear, total / count));
         }
     }
+
+    /**
+     * @param prop string value which should be parsed
+     * @return value of parsed string
+     */
 
     private double parseProp(String prop) {
         //Assumption: strings with more than 3 digits are integer values greater than 1000

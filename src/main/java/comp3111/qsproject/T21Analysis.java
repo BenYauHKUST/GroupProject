@@ -6,12 +6,23 @@ import javafx.scene.chart.XYChart;
 
 import java.util.*;
 
+/**
+ * A class to search, compare and visualize data.
+ * @author <a href=mailto:fsam@connect.ust.hk>SAM FETULLAKH</a>
+ * @version 1.0
+ */
+
 public class T21Analysis {
     public ObservableList<QSItem> University1List = FXCollections.observableArrayList();
     public ObservableList<QSItem> University2List = FXCollections.observableArrayList();
     private String University1Name;
     private String University2Name;
 
+    /**
+     * @param uni_1 The University 1 to search.
+     * @param uni_2 The University 2 to search.
+     * @param years The years for which collect data.
+     */
     T21Analysis(String uni_1, String uni_2, List<String> years) {
         /*
             Your Code Here.
@@ -38,6 +49,11 @@ public class T21Analysis {
         University1List.sort(Comparator.comparing(item -> item.year));
         University2List.sort(Comparator.comparing(item -> item.year));
     }
+
+    /**
+     * @param searchName type to search
+     * @return BarChartData for given universities and years
+     */
 
     XYChart.Series<Double, String> getBarChartData(String searchName) {
         XYChart.Series<Double, String> barData= new XYChart.Series<>();
@@ -83,6 +99,11 @@ public class T21Analysis {
         return barData;
     }
 
+    /**
+     * @param searchName type to search
+     * @return LineChartData for given universities and years
+     */
+
     List<XYChart.Series<String, Double>> getLineChartData(String searchName) {
         List<XYChart.Series<String, Double>> lineData = new ArrayList<>();
         /*
@@ -114,11 +135,18 @@ public class T21Analysis {
         return lineData;
     }
 
+    /**
+     * @param series Chart series to fill with data
+     * @param itemList QSItems to collect data about
+     * @param searchName type to search
+     */
+
     private void fillData(XYChart.Series<String, Double> series, ObservableList<QSItem> itemList, String searchName) {
         String currentYear = null;
         double total = 0;
         int count = 0;
 
+        //Collect data
         for (QSItem item : itemList) {
             if (currentYear == null || !currentYear.equals(item.year)) {
                 if (currentYear != null) {
@@ -141,6 +169,10 @@ public class T21Analysis {
         }
     }
 
+    /**
+     * @param prop string value which should be parsed
+     * @return value of parsed string
+     */
     private double parseProp(String prop) {
         //Assumption: strings with more than 3 digits are integer values greater than 1000
         try{

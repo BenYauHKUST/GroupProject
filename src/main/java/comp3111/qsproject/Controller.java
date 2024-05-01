@@ -290,6 +290,9 @@ public class Controller {
         t1BarChart.getData().add(barChartData);
     }
 
+    /**
+     * Clear all data in Task 2.1 page when clear button is pressed
+     */
     @FXML
     private void T21_onClickClear() {
         /*
@@ -317,6 +320,9 @@ public class Controller {
         t21SFRBarChart.getData().clear();
     }
 
+    /**
+     * To calculate and display data based on user input
+     */
     @FXML
     public void T21_onClickCompare() {
         /*
@@ -365,6 +371,9 @@ public class Controller {
 
     }
 
+    /**
+     * Clear all data in Task 2.2 page when clear button is pressed
+     */
     @FXML
     private void T22_onClickClear() {
         /*
@@ -392,6 +401,9 @@ public class Controller {
         t22SFRBarChart.getData().clear();
     }
 
+    /**
+     * To calculate and display data based on user input
+     */
     @FXML
     public void T22_onClickCompare() {
         /*
