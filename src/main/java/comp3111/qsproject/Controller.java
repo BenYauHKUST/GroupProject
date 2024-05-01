@@ -509,6 +509,7 @@ public class Controller {
         if (selectedRegion.equals("All")) {
             t3CountryComboBox.setVisible(false);
             t3CountryLabel.setVisible(false);
+            t3CountryComboBox.setValue("All");
         }
         else {
             t3CountryComboBox.setVisible(true);
