@@ -173,7 +173,7 @@ public class Controller {
      * To initialize the information in all the tasks and program
      */
     @FXML
-    private void initialize() {
+    public void initialize() {
         // Whole Program Information
         QSList.initialize();
 
@@ -318,7 +318,7 @@ public class Controller {
     }
 
     @FXML
-    private void T21_onClickCompare() {
+    public void T21_onClickCompare() {
         /*
             Your Code Here.
             When click search on Task2.1:
@@ -393,7 +393,7 @@ public class Controller {
     }
 
     @FXML
-    private void T22_onClickCompare() {
+    public void T22_onClickCompare() {
         /*
             Your Code Here.
             When click search on Task2.2:
