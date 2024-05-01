@@ -20,6 +20,11 @@ public class QSItem {
     public String internationalStudents;
     public String size;
     public String facultyCount;
+
+    /**
+     * To initialize a QSItem
+     * @param string_line string list containing all the information of a QSItem
+     */
     QSItem(String[] string_line) {
         assert(string_line.length == 15);
         name = string_line[0];
@@ -37,9 +42,7 @@ public class QSItem {
         facultyCount = string_line[14];
     }
 
-    public String getRank() {
-        return rank;
-    }
+    public String getRank() { return rank; }
 
     public String getName() { return name; }
 
@@ -57,7 +60,7 @@ public class QSItem {
 
     public String getResearchOutput() { return researchOutput; }
 
-    public String getStudentFacultyRatio() {return  studentFacultyRatio; }
+    public String getStudentFacultyRatio() { return  studentFacultyRatio; }
 
     public String getInternationalStudents() {
         return internationalStudents;
@@ -67,6 +70,11 @@ public class QSItem {
         return facultyCount;
     }
 
+    /**
+     * To get the information based on a property name.
+     * @param property the name of the property
+     * @return the property value
+     */
     String getProperty(String property) {
         String propertyValue = new String();
         try {
