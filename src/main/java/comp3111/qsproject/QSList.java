@@ -63,4 +63,16 @@ public class QSList {
             e.printStackTrace();
         }
     }
+
+    /**
+     * To clear all the static data stored in QSList.
+     */
+    public static void clear() {
+        list.clear();
+        university.clear();
+        type.clear();
+        region.clear();
+        country.clear();
+        countryRegion.clear();
+    }
 }

@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class QSListTest {
     @Test
     void initialize() {
+
         String [] expected = {"Private","Public",""};
         String [] actual = new String[QSList.type.size()];
         for (int i = 0; i < QSList.type.size(); i++) {
