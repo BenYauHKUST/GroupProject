@@ -455,7 +455,7 @@ public class Controller {
      * To clear user input for Task 3 window
      */
     @FXML
-    private void T3_onClickClear() {
+    public void T3_onClickClear() {
         t3TypeComboBox.setValue("All");
         t3RegionComboBox.setValue("All");
         t3TopRankTextField.setText("");
@@ -469,7 +469,7 @@ public class Controller {
      * To generate and display recommendation outputs based on user inputs
      */
     @FXML
-    private void T3_onClickRecommend() {
+    public void T3_onClickRecommend() {
         t3ResultMessage.setText("");
         String topValue = t3TopRankTextField.getText();
         String bottomValue = t3BottomRankTextField.getText();
