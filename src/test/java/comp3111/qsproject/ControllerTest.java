@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ControllerTest {
@@ -47,5 +48,22 @@ public class ControllerTest {
         // Call the method
         controller.T22_onClickCompare();
         assertEquals(57, Math.round(controller.t22LineChart.getData().getFirst().getData().getLast().getYValue()));
+    }
+    @Test
+    public void T3_onClickClear() {
+        controller.t3TopRankTextField.setText("100");
+        controller.T3_onClickClear();
+        assertEquals("",controller.t3TopRankTextField.getText());
+    }
+    @Test
+    public void T3_onClickRecommend() {
+        controller.t3TopRankTextField.setText("1");
+        controller.t3BottomRankTextField.setText("50");
+        controller.t3TypeComboBox.setValue("Public");
+        controller.t3RegionComboBox.setValue("Asia");
+        controller.t3CountryComboBox.setValue("Hong Kong SAR");
+        controller.T3_onClickRecommend();
+        String value = controller.t3University.getCellData(0);
+        assertEquals("The University of Hong Kong", value);
     }
 }
