@@ -9,9 +9,10 @@ The QS Information System is a Java and JavaFX-based application designed to vis
 - **QSItem.java**: Represents a single QS ranking item with various attributes.
 - **QSList.java**: Manages a list of QSItem objects.
 - **RecommendItem.java**: Represents a recommended item based on user inputs.
-- **T1Analysis.java**: Provides functionalities to search and visualize data for Task 1.
-- **T22Analysis.java**: Provides functionalities to search, compare, and visualize data for Task 2.2.
-- **T3Analysis.java**: Generates and returns a recommendation list based on user inputs for Task 3.
+- **T1Analysis.java**: Provides functionalities to search and visualize ranking data for input year.
+- **T21Analysis.java**: Provides functionalities to search, compare, and visualize data for University comparison.
+- **T22Analysis.java**: Provides functionalities to search, compare, and visualize data for Country/Region comparison.
+- **T3Analysis.java**: Generates and returns Univertsity recommendation list based on user inputs.
 
 ## Features
 
